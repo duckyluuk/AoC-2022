@@ -23,7 +23,7 @@ with open("2.txt") as f:
         opponent, result = d.split(" ")
         opponent, result = int(opponent,36)-10,int(result,36)-34
         res2+=3*(result+1)
-        res+=[1,2,3][(opponent+result)%3]
+        res2+=(opponent+result)%3+1
 
     print(res2)
     print(time.time()-start)
