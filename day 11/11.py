@@ -9,10 +9,11 @@ with open(__file__.split('\\')[-1].replace("py","txt")) as f:
         monkeys = []
         for m in data:
             info=m.split("\n")
-
+            operation = "".join(info[2].split(": ")[1].split(" ")[2:])
             monkey ={
                         "items":[int(x) for x in info[1].split(": ")[1].split(", ")],
-                        "operation": "".join(info[2].split(": ")[1].split(" ")[2:]),
+                        "operator": operation[3],
+                        "amount": operation[4:],
                         "test": int(info[3].split(": ")[1].split(" ")[2]),
                         "monkeyTo": [int(info[5].split(": ")[1].split(" ")[3]),int(info[4].split(": ")[1].split(" ")[3])],
                         "inspected": 0
@@ -26,7 +27,11 @@ with open(__file__.split('\\')[-1].replace("py","txt")) as f:
         for x in range(rounds):
             for m in monkeys:
                 for item in m['items']:
-                    item=eval(m['operation'].replace('old','item'))
+                    if(m['operator'] == "*"):
+                        if(m['amount'] == 'old'):
+                            item=item*item 
+                        else: item=item*int(m['amount'])
+                    else: item=item+int(m['amount'])
                     
                     if doDivision: 
                         item=item//3
